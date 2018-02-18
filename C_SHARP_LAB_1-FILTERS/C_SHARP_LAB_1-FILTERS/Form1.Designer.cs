@@ -45,8 +45,16 @@
             this.sepiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreBrightnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sobelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sobelYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clarityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.motionBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scharrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pruittToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.yToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.xToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.yToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -120,8 +128,10 @@
             this.blurToolStripMenuItem,
             this.gaussianToolStripMenuItem,
             this.sobelToolStripMenuItem,
-            this.sobelYToolStripMenuItem,
-            this.clarityToolStripMenuItem});
+            this.clarityToolStripMenuItem,
+            this.motionBlurToolStripMenuItem,
+            this.scharrToolStripMenuItem,
+            this.pruittToolStripMenuItem});
             this.matrixToolStripMenuItem.Name = "matrixToolStripMenuItem";
             this.matrixToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.matrixToolStripMenuItem.Text = "Matrix";
@@ -188,17 +198,12 @@
             // 
             // sobelToolStripMenuItem
             // 
+            this.sobelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xToolStripMenuItem2,
+            this.yToolStripMenuItem2});
             this.sobelToolStripMenuItem.Name = "sobelToolStripMenuItem";
             this.sobelToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.sobelToolStripMenuItem.Text = "Sobel X";
-            this.sobelToolStripMenuItem.Click += new System.EventHandler(this.sobelToolStripMenuItem_Click);
-            // 
-            // sobelYToolStripMenuItem
-            // 
-            this.sobelYToolStripMenuItem.Name = "sobelYToolStripMenuItem";
-            this.sobelYToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.sobelYToolStripMenuItem.Text = "Sobel Y";
-            this.sobelYToolStripMenuItem.Click += new System.EventHandler(this.sobelYToolStripMenuItem_Click);
+            this.sobelToolStripMenuItem.Text = "Sobel";
             // 
             // clarityToolStripMenuItem
             // 
@@ -206,6 +211,73 @@
             this.clarityToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.clarityToolStripMenuItem.Text = "More clarity";
             this.clarityToolStripMenuItem.Click += new System.EventHandler(this.clarityToolStripMenuItem_Click);
+            // 
+            // motionBlurToolStripMenuItem
+            // 
+            this.motionBlurToolStripMenuItem.Name = "motionBlurToolStripMenuItem";
+            this.motionBlurToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.motionBlurToolStripMenuItem.Text = "Motion blur";
+            this.motionBlurToolStripMenuItem.Click += new System.EventHandler(this.motionBlurToolStripMenuItem_Click);
+            // 
+            // scharrToolStripMenuItem
+            // 
+            this.scharrToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xToolStripMenuItem,
+            this.yToolStripMenuItem});
+            this.scharrToolStripMenuItem.Name = "scharrToolStripMenuItem";
+            this.scharrToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.scharrToolStripMenuItem.Text = "Scharr";
+            // 
+            // xToolStripMenuItem
+            // 
+            this.xToolStripMenuItem.Name = "xToolStripMenuItem";
+            this.xToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.xToolStripMenuItem.Text = "X";
+            this.xToolStripMenuItem.Click += new System.EventHandler(this.xToolStripMenuItem_Click);
+            // 
+            // yToolStripMenuItem
+            // 
+            this.yToolStripMenuItem.Name = "yToolStripMenuItem";
+            this.yToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.yToolStripMenuItem.Text = "Y";
+            this.yToolStripMenuItem.Click += new System.EventHandler(this.yToolStripMenuItem_Click);
+            // 
+            // pruittToolStripMenuItem
+            // 
+            this.pruittToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xToolStripMenuItem1,
+            this.yToolStripMenuItem1});
+            this.pruittToolStripMenuItem.Name = "pruittToolStripMenuItem";
+            this.pruittToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.pruittToolStripMenuItem.Text = "Pruitt";
+            // 
+            // xToolStripMenuItem1
+            // 
+            this.xToolStripMenuItem1.Name = "xToolStripMenuItem1";
+            this.xToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
+            this.xToolStripMenuItem1.Text = "X";
+            this.xToolStripMenuItem1.Click += new System.EventHandler(this.xToolStripMenuItem1_Click);
+            // 
+            // yToolStripMenuItem1
+            // 
+            this.yToolStripMenuItem1.Name = "yToolStripMenuItem1";
+            this.yToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
+            this.yToolStripMenuItem1.Text = "Y";
+            this.yToolStripMenuItem1.Click += new System.EventHandler(this.yToolStripMenuItem1_Click);
+            // 
+            // xToolStripMenuItem2
+            // 
+            this.xToolStripMenuItem2.Name = "xToolStripMenuItem2";
+            this.xToolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
+            this.xToolStripMenuItem2.Text = "X";
+            this.xToolStripMenuItem2.Click += new System.EventHandler(this.xToolStripMenuItem2_Click);
+            // 
+            // yToolStripMenuItem2
+            // 
+            this.yToolStripMenuItem2.Name = "yToolStripMenuItem2";
+            this.yToolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
+            this.yToolStripMenuItem2.Text = "Y";
+            this.yToolStripMenuItem2.Click += new System.EventHandler(this.yToolStripMenuItem2_Click);
             // 
             // Form1
             // 
@@ -246,8 +318,16 @@
         private System.Windows.Forms.ToolStripMenuItem sepiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moreBrightnessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sobelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sobelYToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clarityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem motionBlurToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scharrToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pruittToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem yToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem xToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem yToolStripMenuItem2;
     }
 }
 

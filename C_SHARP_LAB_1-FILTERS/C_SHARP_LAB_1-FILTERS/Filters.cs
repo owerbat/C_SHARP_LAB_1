@@ -232,4 +232,80 @@ namespace C_SHARP_LAB_1_FILTERS
             kernel[1, 1] = 5.0f;
         }
     };
+
+
+
+    class MotionBlurFilter: MatrixFilter
+    {
+        public MotionBlurFilter()
+        {
+            int size = 5;
+
+            kernel = new float[size, size];
+
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    kernel[i, j] = 0.0f;
+
+            for (int i = 0; i < size; i++)
+                kernel[i, i] = (float)(1.0f / (float)(size));
+        }
+    };
+
+
+
+    class ScharrFilterX : MatrixFilter
+    {
+        public ScharrFilterX()
+        {
+            kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[0, 2] = 3.0f;
+            kernel[0, 1] = 10.0f;
+            kernel[1, 0] = kernel[1, 1] = kernel[1, 2] = 0.0f;
+            kernel[2, 0] = kernel[2, 2] = -3.0f;
+            kernel[2, 1] = -10.0f;
+        }
+    };
+
+    class ScharrFilterY : MatrixFilter
+    {
+        public ScharrFilterY()
+        {
+            kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[2, 0] = 3.0f;
+            kernel[1, 0] = 10.0f;
+            kernel[0, 1] = kernel[1, 1] = kernel[2, 1] = 0.0f;
+            kernel[0, 2] = kernel[2, 2] = -3.0f;
+            kernel[1, 2] = -10.0f;
+        }
+    };
+
+
+
+
+    class PruittFilterX : MatrixFilter
+    {
+        public PruittFilterX()
+        {
+            kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[0, 1] = kernel[0, 2] = -1.0f;
+            kernel[1, 0] = kernel[1, 1] = kernel[1, 2] = 0.0f;
+            kernel[2, 0] = kernel[2, 1] = kernel[2, 2] = 1.0f;
+        }
+    };
+
+    class PruittFilterY : MatrixFilter
+    {
+        public PruittFilterY()
+        {
+            kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[1, 0] = kernel[2, 0] = -1.0f;
+            kernel[0, 1] = kernel[1, 1] = kernel[2, 1] = 0.0f;
+            kernel[0, 2] = kernel[1, 2] = kernel[2, 2] = 1.0f;
+        }
+    };
 }

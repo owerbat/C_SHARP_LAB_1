@@ -95,21 +95,51 @@ namespace C_SHARP_LAB_1_FILTERS
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
-        private void sobelToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clarityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new MoreClarityFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void motionBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new MotionBlurFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void xToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new ScharrFilterX();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void yToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new ScharrFilterY();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void xToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filters filter = new PruittFilterX();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void yToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filters filter = new PruittFilterY();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void xToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             Filters filter = new SobelFilterX();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
-        private void sobelYToolStripMenuItem_Click(object sender, EventArgs e)
+        private void yToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             Filters filter = new SobelFilterY();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-
-        private void clarityToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filters filter = new MoreClarityFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
     }
