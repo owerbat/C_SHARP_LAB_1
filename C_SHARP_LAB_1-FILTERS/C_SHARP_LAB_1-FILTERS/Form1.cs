@@ -34,10 +34,83 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InvertFilter filter = new InvertFilter();
-            Bitmap resultImage = filter.processImage(image);
+            /*InvertFilter filter = new InvertFilter();
+            Bitmap resultImage = filter.processImage(image, backgroundWorker1);
             pictureBox1.Image = resultImage;
-            pictureBox1.Refresh();
+            pictureBox1.Refresh();*/
+
+            Filters filter = new InvertFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //Bitmap newImage = ((Filters)e.Argument).processImage(image);
+            Bitmap newImage = ((Filters)e.Argument).processImage(image, backgroundWorker1);
+            if (backgroundWorker1.CancellationPending != true)
+                image = newImage;
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!e.Cancelled)
+            {
+                pictureBox1.Image = image;
+                pictureBox1.Refresh();
+            }
+            progressBar1.Value = 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1.CancelAsync();
+        }
+
+        private void blurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new BlurFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void gaussianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new GaussianFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void bWToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new GrayScaleFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new SepiaFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void moreBrightnessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new MoreBrightnessFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void sobelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new SobelFilterX();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void sobelYToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new SobelFilterY();
+            backgroundWorker1.RunWorkerAsync(filter);
         }
     }
 }
