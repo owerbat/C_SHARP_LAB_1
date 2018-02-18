@@ -217,4 +217,19 @@ namespace C_SHARP_LAB_1_FILTERS
             kernel[1, 2] = 2.0f;
         }
     };
+
+
+
+
+    class MoreClarityFilter: MatrixFilter
+    {
+        public MoreClarityFilter()
+        {
+            kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[0, 2] = kernel[2, 2] = kernel[2, 0] = 0.0f;
+            kernel[1, 0] = kernel[1, 2] = kernel[2, 1] = kernel[0, 1] = -1.0f;
+            kernel[1, 1] = 5.0f;
+        }
+    };
 }

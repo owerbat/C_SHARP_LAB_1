@@ -46,6 +46,7 @@
             this.moreBrightnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sobelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sobelYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clarityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +120,8 @@
             this.blurToolStripMenuItem,
             this.gaussianToolStripMenuItem,
             this.sobelToolStripMenuItem,
-            this.sobelYToolStripMenuItem});
+            this.sobelYToolStripMenuItem,
+            this.clarityToolStripMenuItem});
             this.matrixToolStripMenuItem.Name = "matrixToolStripMenuItem";
             this.matrixToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.matrixToolStripMenuItem.Text = "Matrix";
@@ -198,6 +200,13 @@
             this.sobelYToolStripMenuItem.Text = "Sobel Y";
             this.sobelYToolStripMenuItem.Click += new System.EventHandler(this.sobelYToolStripMenuItem_Click);
             // 
+            // clarityToolStripMenuItem
+            // 
+            this.clarityToolStripMenuItem.Name = "clarityToolStripMenuItem";
+            this.clarityToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.clarityToolStripMenuItem.Text = "More clarity";
+            this.clarityToolStripMenuItem.Click += new System.EventHandler(this.clarityToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -238,6 +247,7 @@
         private System.Windows.Forms.ToolStripMenuItem moreBrightnessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sobelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sobelYToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clarityToolStripMenuItem;
     }
 }
 

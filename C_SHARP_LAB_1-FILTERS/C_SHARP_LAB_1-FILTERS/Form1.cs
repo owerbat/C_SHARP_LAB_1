@@ -34,18 +34,12 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*InvertFilter filter = new InvertFilter();
-            Bitmap resultImage = filter.processImage(image, backgroundWorker1);
-            pictureBox1.Image = resultImage;
-            pictureBox1.Refresh();*/
-
             Filters filter = new InvertFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            //Bitmap newImage = ((Filters)e.Argument).processImage(image);
             Bitmap newImage = ((Filters)e.Argument).processImage(image, backgroundWorker1);
             if (backgroundWorker1.CancellationPending != true)
                 image = newImage;
@@ -110,6 +104,12 @@ namespace C_SHARP_LAB_1_FILTERS
         private void sobelYToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Filters filter = new SobelFilterY();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void clarityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new MoreClarityFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
     }
