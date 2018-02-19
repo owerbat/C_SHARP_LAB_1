@@ -7,15 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace C_SHARP_LAB_1_FILTERS
 {
     public partial class Form1 : Form
     {
         Bitmap image;
+        Stack cashBack;
+        Stack cashForward;
+
         public Form1()
         {
             InitializeComponent();
+            cashBack = new Stack();
+            cashForward = new Stack();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -34,6 +40,11 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //PictureBox
+            if(pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new InvertFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
@@ -79,68 +90,163 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void bWToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new GrayScaleFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new SepiaFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void moreBrightnessToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new MoreBrightnessFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void clarityToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new MoreClarityFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void motionBlurToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new MotionBlurFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void xToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new ScharrFilterX();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void yToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new ScharrFilterY();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void xToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new PruittFilterX();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void yToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new PruittFilterY();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void xToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new SobelFilterX();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void yToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new SobelFilterY();
             backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+
+            dialog.Filter = "Image files | *.png; *.jpg; *.bmp | All Files (*.*) | *.* ";
+            dialog.Title = "Save an Image File";
+            dialog.ShowDialog();
+
+            if(dialog.FileName != "")
+            {
+                System.IO.FileStream fs = (System.IO.FileStream)dialog.OpenFile();
+
+                switch (dialog.FilterIndex)
+                {
+                    case 1:
+                        image.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 2:
+                        image.Save(fs, System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+
+                    case 3:
+                        image.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                }
+
+                fs.Close();
+            }
+        }
+
+        private void stepBackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(cashBack != null)
+            {
+                image = (Bitmap)cashBack.Pop();
+                pictureBox1.Image = image;
+                cashForward.Push(image);
+            }
+        }
+
+        private void stepForwardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(cashForward != null)
+            {
+                image = (Bitmap)cashForward.Pop();
+                pictureBox1.Image = image;
+                cashBack.Push(image);
+            }
         }
     }
 }
