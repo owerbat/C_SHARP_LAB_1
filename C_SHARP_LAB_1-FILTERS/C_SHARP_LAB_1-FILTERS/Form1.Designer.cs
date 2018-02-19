@@ -32,6 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filtersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dottyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,19 +53,19 @@
             this.pruittToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.yToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.button1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepBackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepForwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button1 = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox1.Location = new System.Drawing.Point(0, 27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(973, 499);
@@ -97,9 +98,16 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // filtersToolStripMenuItem
             // 
@@ -260,6 +268,29 @@
             this.yToolStripMenuItem1.Text = "Y";
             this.yToolStripMenuItem1.Click += new System.EventHandler(this.yToolStripMenuItem1_Click);
             // 
+            // actionsToolStripMenuItem
+            // 
+            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stepBackToolStripMenuItem,
+            this.stepForwardToolStripMenuItem});
+            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
+            this.actionsToolStripMenuItem.Text = "Actions";
+            // 
+            // stepBackToolStripMenuItem
+            // 
+            this.stepBackToolStripMenuItem.Name = "stepBackToolStripMenuItem";
+            this.stepBackToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.stepBackToolStripMenuItem.Text = "Step back";
+            this.stepBackToolStripMenuItem.Click += new System.EventHandler(this.stepBackToolStripMenuItem_Click);
+            // 
+            // stepForwardToolStripMenuItem
+            // 
+            this.stepForwardToolStripMenuItem.Name = "stepForwardToolStripMenuItem";
+            this.stepForwardToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.stepForwardToolStripMenuItem.Text = "Step forward";
+            this.stepForwardToolStripMenuItem.Click += new System.EventHandler(this.stepForwardToolStripMenuItem_Click);
+            // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
@@ -284,36 +315,6 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(782, 23);
             this.progressBar1.TabIndex = 3;
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // actionsToolStripMenuItem
-            // 
-            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stepBackToolStripMenuItem,
-            this.stepForwardToolStripMenuItem});
-            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
-            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
-            this.actionsToolStripMenuItem.Text = "Actions";
-            // 
-            // stepBackToolStripMenuItem
-            // 
-            this.stepBackToolStripMenuItem.Name = "stepBackToolStripMenuItem";
-            this.stepBackToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.stepBackToolStripMenuItem.Text = "Step back";
-            this.stepBackToolStripMenuItem.Click += new System.EventHandler(this.stepBackToolStripMenuItem_Click);
-            // 
-            // stepForwardToolStripMenuItem
-            // 
-            this.stepForwardToolStripMenuItem.Name = "stepForwardToolStripMenuItem";
-            this.stepForwardToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.stepForwardToolStripMenuItem.Text = "Step forward";
-            this.stepForwardToolStripMenuItem.Click += new System.EventHandler(this.stepForwardToolStripMenuItem_Click);
             // 
             // Form1
             // 

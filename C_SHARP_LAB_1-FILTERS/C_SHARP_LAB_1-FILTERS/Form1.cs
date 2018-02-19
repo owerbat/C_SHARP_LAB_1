@@ -231,21 +231,31 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void stepBackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(cashBack != null)
+            if(cashBack.Count != 0)
             {
+                Bitmap tmp = image;
                 image = (Bitmap)cashBack.Pop();
                 pictureBox1.Image = image;
-                cashForward.Push(image);
+                cashForward.Push(tmp);
+            }
+            else
+            {
+                DialogResult res = MessageBox.Show("You're in the beggining of the editing");
             }
         }
 
         private void stepForwardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(cashForward != null)
+            if(cashForward.Count != 0)
             {
+                Bitmap tmp = image;
                 image = (Bitmap)cashForward.Pop();
                 pictureBox1.Image = image;
-                cashBack.Push(image);
+                cashBack.Push(tmp);
+            }
+            else
+            {
+                DialogResult res = MessageBox.Show("You're in the end of the editing");
             }
         }
     }
