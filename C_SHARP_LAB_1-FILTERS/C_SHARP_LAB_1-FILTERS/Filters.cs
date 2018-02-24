@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel;
+using System.Security.Cryptography;
+
 
 namespace C_SHARP_LAB_1_FILTERS
 {
@@ -65,8 +67,6 @@ namespace C_SHARP_LAB_1_FILTERS
 
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
-            //throw new NotImplementedException();
-
             int radiusX = kernel.GetLength(0) / 2;
             int radiusY = kernel.GetLength(1) / 2;
 
@@ -219,6 +219,73 @@ namespace C_SHARP_LAB_1_FILTERS
     };
 
 
+    
+
+        class SobelFilter : Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            float[,] kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[0, 2] = -1.0f;
+            kernel[0, 1] = -2.0f;
+            kernel[1, 0] = kernel[1, 1] = kernel[1, 2] = 0.0f;
+            kernel[2, 0] = kernel[2, 2] = 1.0f;
+            kernel[2, 1] = 2.0f;
+
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            float resultRX = 0;
+            float resultGX = 0;
+            float resultBX = 0;
+            float resultRY = 0;
+            float resultGY = 0;
+            float resultBY = 0;
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultRX += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultGX += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultBX += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            kernel[0, 0] = kernel[2, 0] = -1.0f;
+            kernel[1, 0] = -2.0f;
+            kernel[0, 1] = kernel[1, 1] = kernel[2, 1] = 0.0f;
+            kernel[0, 2] = kernel[2, 2] = 1.0f;
+            kernel[1, 2] = 2.0f;
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultRY += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultGY += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultBY += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            return Color.FromArgb(Clamp((int)(Math.Sqrt((resultRX * (int)resultRX + resultRY * (int)resultRY))), 0, 255),
+                                  Clamp((int)(Math.Sqrt((resultGX * (int)resultGX + resultGY * (int)resultGY))), 0, 255), 
+                                  Clamp((int)(Math.Sqrt((resultBX * (int)resultBX + resultBY * (int)resultBY))), 0, 255));
+        }
+    };
+
+
 
 
     class MoreClarityFilter: MatrixFilter
@@ -284,6 +351,71 @@ namespace C_SHARP_LAB_1_FILTERS
 
 
 
+    class ScharrFilter : Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            float[,] kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[0, 2] = 3.0f;
+            kernel[0, 1] = 10.0f;
+            kernel[1, 0] = kernel[1, 1] = kernel[1, 2] = 0.0f;
+            kernel[2, 0] = kernel[2, 2] = -3.0f;
+            kernel[2, 1] = -10.0f;
+
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            float resultRX = 0;
+            float resultGX = 0;
+            float resultBX = 0;
+            float resultRY = 0;
+            float resultGY = 0;
+            float resultBY = 0;
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultRX += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultGX += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultBX += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            kernel[0, 0] = kernel[2, 0] = 3.0f;
+            kernel[1, 0] = 10.0f;
+            kernel[0, 1] = kernel[1, 1] = kernel[2, 1] = 0.0f;
+            kernel[0, 2] = kernel[2, 2] = -3.0f;
+            kernel[1, 2] = -10.0f;
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultRY += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultGY += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultBY += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            return Color.FromArgb(Clamp((int)(Math.Sqrt((resultRX * (int)resultRX + resultRY * (int)resultRY))), 0, 255),
+                                  Clamp((int)(Math.Sqrt((resultGX * (int)resultGX + resultGY * (int)resultGY))), 0, 255),
+                                  Clamp((int)(Math.Sqrt((resultBX * (int)resultBX + resultBY * (int)resultBY))), 0, 255));
+        }
+    };
+
+
 
     class PruittFilterX : MatrixFilter
     {
@@ -306,6 +438,192 @@ namespace C_SHARP_LAB_1_FILTERS
             kernel[0, 0] = kernel[1, 0] = kernel[2, 0] = -1.0f;
             kernel[0, 1] = kernel[1, 1] = kernel[2, 1] = 0.0f;
             kernel[0, 2] = kernel[1, 2] = kernel[2, 2] = 1.0f;
+        }
+    };
+
+
+
+
+    class PruittFilter : Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            float[,] kernel = new float[3, 3];
+
+            kernel[0, 0] = kernel[0, 1] = kernel[0, 2] = -1.0f;
+            kernel[1, 0] = kernel[1, 1] = kernel[1, 2] = 0.0f;
+            kernel[2, 0] = kernel[2, 1] = kernel[2, 2] = 1.0f;
+
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            float resultRX = 0;
+            float resultGX = 0;
+            float resultBX = 0;
+            float resultRY = 0;
+            float resultGY = 0;
+            float resultBY = 0;
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultRX += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultGX += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultBX += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            kernel[0, 0] = kernel[1, 0] = kernel[2, 0] = -1.0f;
+            kernel[0, 1] = kernel[1, 1] = kernel[2, 1] = 0.0f;
+            kernel[0, 2] = kernel[1, 2] = kernel[2, 2] = 1.0f;
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultRY += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultGY += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultBY += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            return Color.FromArgb(Clamp((int)(Math.Sqrt((resultRX * (int)resultRX + resultRY * (int)resultRY))), 0, 255),
+                                  Clamp((int)(Math.Sqrt((resultGX * (int)resultGX + resultGY * (int)resultGY))), 0, 255),
+                                  Clamp((int)(Math.Sqrt((resultBX * (int)resultBX + resultBY * (int)resultBY))), 0, 255));
+        }
+    };
+
+
+
+
+    class GlassFilter: Filters
+    {
+        Random rand = new Random();
+
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            int newX = Clamp((int)(x + (rand.NextDouble() - 0.5) * 10), 0, sourceImage.Width - 1);
+            int newY = Clamp((int)(y + (rand.NextDouble() - 0.5) * 10), 0, sourceImage.Height - 1);
+
+            Color resultColor = sourceImage.GetPixel(newX, newY);
+            return resultColor;
+        }
+    };
+
+ 
+
+    class HorizontalWavesFilter : Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            int newX = Clamp((int)(x + 20 * (Math.Sin(2 * y * Math.PI / 60))), 0, sourceImage.Width - 1);
+
+            return sourceImage.GetPixel(newX, y);
+        }
+    };
+
+
+
+    class VerticalWavesFilter : Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            int newX = Clamp((int)(x + 20 * (Math.Sin(2 * x * Math.PI / 30))), 0, sourceImage.Width - 1);
+
+            return sourceImage.GetPixel(newX, y);
+        }
+    };
+
+
+
+    class Filter1: MatrixFilter
+    {
+        public Filter1()
+        {
+            kernel = new float[3, 3]
+            {
+                {0, 1, 0 },
+                {1, 0, -1 },
+                {0, -1, 0 }
+            };
+        }
+    };
+
+
+
+    class NormFilter: Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            Color sourseColor = sourceImage.GetPixel(x, y);
+
+            double norm = Math.Sqrt(sourseColor.R * sourseColor.R + sourseColor.G * sourseColor.G + sourseColor.G * sourseColor.G);
+
+            return Color.FromArgb(Clamp((int)(sourseColor.R / norm), 0, 255), 
+                                  Clamp((int)(sourseColor.G / norm), 0, 255),
+                                  Clamp((int)(sourseColor.B / norm), 0, 255));
+        }
+    };
+
+
+
+    class EmbossingFilter: MatrixFilter
+    {
+        public EmbossingFilter()
+        {
+            kernel = new float[3, 3]
+            {
+                {0,  1,  0 },
+                {1,  0, -1 },
+                {0, -1,  0 }
+            };
+        }
+
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            float resultR = 0;
+            float resultG = 0;
+            float resultB = 0;
+
+            for(int i = -radiusY; i <= radiusY; i++)
+            {
+                for(int j = -radiusX; j <= radiusX; j++)
+                {
+                    int idX = Clamp(x + j, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + i, 0, sourceImage.Height - 1);
+
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+
+                    resultR += neighborColor.R * kernel[j + radiusX, i + radiusY];
+                    resultG += neighborColor.G * kernel[j + radiusX, i + radiusY];
+                    resultB += neighborColor.B * kernel[j + radiusX, i + radiusY];
+                }
+            }
+
+            Color color1 = Color.FromArgb(Clamp((int)resultR, 0, 255), Clamp((int)resultG, 0, 255), Clamp((int)resultB, 0, 255));
+
+            float k = 130.0f;
+            Color color2 = Color.FromArgb(Clamp((int)(color1.R + k), 0, 255),
+                                          Clamp((int)(color1.G + k), 0, 255),
+                                          Clamp((int)(color1.B + k), 0, 255));
+
+            return Color.FromArgb(Clamp((int)(0.36f * color2.R + 0.53 * color2.G + 0.11 * color2.B), 0, 255),
+                                  Clamp((int)(0.36f * color2.R + 0.53 * color2.G + 0.11 * color2.B), 0, 255),
+                                  Clamp((int)(0.36f * color2.R + 0.53 * color2.G + 0.11 * color2.B), 0, 255));
         }
     };
 }

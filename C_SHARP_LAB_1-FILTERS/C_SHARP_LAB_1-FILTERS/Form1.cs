@@ -22,6 +22,7 @@ namespace C_SHARP_LAB_1_FILTERS
             InitializeComponent();
             cashBack = new Stack();
             cashForward = new Stack();
+            KeyPreview = true;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,12 +79,20 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void blurToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new BlurFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void gaussianToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
             Filters filter = new GaussianFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
@@ -258,5 +267,104 @@ namespace C_SHARP_LAB_1_FILTERS
                 DialogResult res = MessageBox.Show("You're in the end of the editing");
             }
         }
+
+        private void glassToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try { 
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new GlassFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                DialogResult res = MessageBox.Show("The glass filter works incorrectly");
+            }
+        }
+
+        private void sobelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new SobelFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void scharrToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new ScharrFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void pruittToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new PruittFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new HorizontalWavesFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new VerticalWavesFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'q') 
+                stepBackToolStripMenuItem_Click(sender, e);
+            if(e.KeyChar == 'w')
+                stepForwardToolStripMenuItem_Click(sender, e);
+            if (e.KeyChar == Keys.Escape.GetHashCode())
+                Application.Exit();
+            if (e.KeyChar == '1')
+                sobelToolStripMenuItem_Click(sender, e);
+            if (e.KeyChar == '2')
+                scharrToolStripMenuItem_Click(sender, e);
+            if (e.KeyChar == '3')
+                pruittToolStripMenuItem_Click(sender, e);
+            if (e.KeyChar == '4')
+                embossingToolStripMenuItem_Click(sender, e);
+            if (e.KeyChar == 'a')
+                openToolStripMenuItem_Click(sender, e);
+            if (e.KeyChar == 's')
+                saveToolStripMenuItem_Click(sender, e);
+        }
+
+        private void embossingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new EmbossingFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
     }
+    
 }
