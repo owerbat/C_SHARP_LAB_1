@@ -14,7 +14,7 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         protected abstract Color calculateNewPixelColor(Bitmap sourceImage, int x, int y);
 
-        public Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        public virtual Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
         {
             Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
             for(int i = 0; i < sourceImage.Width; i++)
@@ -638,12 +638,81 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         public DilationFilter()
         {
-            kernel = new float[3, 3]
+            /*kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
                 {0, 1, 0}
+            };*/
+                
+            /*kernel = new float[3, 3]
+            {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
+            };*/
+
+            kernel = new float[5, 5]
+            {
+                {0, 0, 1, 0, 0},
+                {0, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1},
+                {0, 1, 1, 1, 0},
+                {0, 0, 1, 0, 0}
             };
+
+            /*kernel = new float[5, 5]
+            {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+            };*/
+        }
+
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Color max = Color.FromArgb(0, 0, 0);
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    Color curr = sourceImage.GetPixel(Clamp(x + i, 0, sourceImage.Width - 1), Clamp(y + j, 0, sourceImage.Height - 1));
+                    if ((kernel[j + radiusX, i + radiusY] != 0) && (Math.Sqrt(curr.R * curr.R + curr.G * curr.G + curr.B * curr.B) >
+                                                                    Math.Sqrt(max.R * max.R + max.G * max.G + max.B * max.B)))
+                        max = curr;
+                }
+            }
+
+            return max;
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+
+            for (int i = radiusX; i < sourceImage.Width - radiusX; i++)
+            {
+                worker.ReportProgress((int)((float)i / resultImage.Width * 100));
+
+                if (worker.CancellationPending)
+                    return null;
+
+                for (int j = radiusY; j < sourceImage.Height - radiusY; j++)
+                {
+                    resultImage.SetPixel(i, j, calculateNewPixelColor(sourceImage, i, j));
+                }
+            }
+
+            return resultImage;
         }
     };
 
@@ -653,12 +722,12 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         public ErosionFilter()
         {
-            kernel = new float[3, 3]
+            /*kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
                 {0, 1, 0}
-            };
+            };*/
 
             /*kernel = new float[3, 3]
             {
@@ -667,14 +736,14 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1}
             };*/
 
-            /*kernel = new float[5, 5]
+            kernel = new float[5, 5]
             {
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1},
                 {0, 1, 1, 1, 0},
                 {0, 0, 1, 0, 0}
-            };*/
+            };
 
             /*kernel = new float[5, 5]
             {
@@ -707,7 +776,7 @@ namespace C_SHARP_LAB_1_FILTERS
             return min;
         }
 
-        public new Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
         {
             int radiusX = kernel.GetLength(0) / 2;
             int radiusY = kernel.GetLength(1) / 2;
@@ -727,6 +796,168 @@ namespace C_SHARP_LAB_1_FILTERS
                 }
             }
 
+            return resultImage;
+        }
+    };
+
+
+
+    class ClosingFilter : MatrixFilter
+    {
+        public ClosingFilter()
+        {
+            /*kernel = new float[3, 3]
+            {
+                {0, 1, 0},
+                {1, 1, 1},
+                {0, 1, 0}
+            };*/
+
+            /*kernel = new float[3, 3]
+            {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
+            };*/
+
+            kernel = new float[5, 5]
+            {
+                {0, 0, 1, 0, 0},
+                {0, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1},
+                {0, 1, 1, 1, 0},
+                {0, 0, 1, 0, 0}
+            };
+
+            /*kernel = new float[5, 5]
+            {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+            };*/
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            Filters filterD = new DilationFilter();
+            Filters filterE = new ErosionFilter();
+
+            Bitmap tmp = filterD.processImage(sourceImage, worker);
+            Bitmap res = filterE.processImage(tmp, worker);
+
+            return res;
+        }
+    };
+
+
+
+
+    class OpeningFilter: MatrixFilter
+    {
+        public OpeningFilter()
+        {
+            
+
+            /*kernel = new float[3, 3]
+            {
+                {0, 1, 0},
+                {1, 1, 1},
+                {0, 1, 0}
+            };*/
+
+            /*kernel = new float[3, 3]
+            {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
+            };*/
+
+            kernel = new float[5, 5]
+            {
+                {0, 0, 1, 0, 0},
+                {0, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1},
+                {0, 1, 1, 1, 0},
+                {0, 0, 1, 0, 0}
+            };
+
+            /*kernel = new float[5, 5]
+            {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+            };*/
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            Filters filterD = new DilationFilter();
+            Filters filterE = new ErosionFilter();
+
+            Bitmap tmp = filterE.processImage(sourceImage, worker);
+            Bitmap res = filterD.processImage(tmp, worker);
+
+            //Bitmap res = filterE.processImage(sourceImage, worker);
+
+            return res;
+        }
+    };
+
+
+
+
+    class GrayWorld: Filters
+    {
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            return Color.FromArgb(255, 0, 0);
+        }
+
+        protected Color calculateNewPixelColor1(Bitmap sourceImage, int x, int y, double coefR, double coefG, double coefB)
+        {
+            Color sourceColor = sourceImage.GetPixel(x, y);
+            return Color.FromArgb(Clamp((int)(sourceColor.R * coefR), 0, 255), 
+                                  Clamp((int)(sourceColor.G * coefG), 0, 255),
+                                  Clamp((int)(sourceColor.B * coefB), 0, 255));
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            int count = sourceImage.Height * sourceImage.Width, sumR = 0, sumG = 0, sumB = 0;
+
+            for (int i = 0; i < sourceImage.Width; i++)
+                for (int j = 0; j < sourceImage.Height; j++)
+                {
+                    sumR += sourceImage.GetPixel(i, j).R;
+                    sumG += sourceImage.GetPixel(i, j).G;
+                    sumB += sourceImage.GetPixel(i, j).B;
+                }
+
+            double averageR = (double)(sumR / count);
+            double averageG = (double)(sumG / count);
+            double averageB = (double)(sumB / count);
+
+            double Avg = (double)((averageR + averageG + averageB) / 3.0);
+
+            double coefR = (double)(Avg / averageR);
+            double coefG = (double)(Avg / averageG);
+            double coefB = (double)(Avg / averageB);
+
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+            for (int i = 0; i < sourceImage.Width; i++)
+            {
+                worker.ReportProgress((int)((float)i / resultImage.Width * 100));
+                if (worker.CancellationPending)
+                    return null;
+                for (int j = 0; j < sourceImage.Height; j++)
+                {
+                    resultImage.SetPixel(i, j, calculateNewPixelColor1(sourceImage, i, j, coefR, coefG, coefB));
+                }
+            }
             return resultImage;
         }
     };

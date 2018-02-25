@@ -16,6 +16,7 @@ namespace C_SHARP_LAB_1_FILTERS
         Bitmap image;
         Stack cashBack;
         Stack cashForward;
+        Bitmap FirstImage;
 
         public Form1()
         {
@@ -37,6 +38,8 @@ namespace C_SHARP_LAB_1_FILTERS
 
             pictureBox1.Image = image;
             pictureBox1.Refresh();
+
+            FirstImage = new Bitmap(image);
         }
 
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -383,6 +386,68 @@ namespace C_SHARP_LAB_1_FILTERS
                 cashBack.Push(image);
             }
             Filters filter = new ErosionFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void closingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*try
+            {
+                if (pictureBox1.Image != null)
+                {
+                    cashBack.Push(image);
+                }
+                Filters filter = new DilationFilter();
+                backgroundWorker1.RunWorkerAsync(filter);
+                filter = new ErosionFilter();
+                backgroundWorker1.RunWorkerAsync(filter);
+            }
+            catch(Exception)
+            {
+
+            }*/
+
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new ClosingFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void openingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*try
+            {
+                if (pictureBox1.Image != null)
+                {
+                    cashBack.Push(image);
+                }
+                Filters filter = new ErosionFilter();
+                backgroundWorker1.RunWorkerAsync(filter);
+                filter = new DilationFilter();
+                backgroundWorker1.RunWorkerAsync(filter);
+            }
+            catch (Exception)
+            {
+
+            }*/
+
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new OpeningFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void grayWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new GrayWorld();
             backgroundWorker1.RunWorkerAsync(filter);
         }
     }
