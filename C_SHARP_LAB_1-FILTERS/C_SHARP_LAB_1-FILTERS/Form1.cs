@@ -336,9 +336,9 @@ namespace C_SHARP_LAB_1_FILTERS
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == 'q') 
+            if (e.KeyChar == 'q' || e.KeyChar == 'й') 
                 stepBackToolStripMenuItem_Click(sender, e);
-            if(e.KeyChar == 'w')
+            if (e.KeyChar == 'w' || e.KeyChar == 'ц')
                 stepForwardToolStripMenuItem_Click(sender, e);
             if (e.KeyChar == Keys.Escape.GetHashCode())
                 Application.Exit();
@@ -350,9 +350,9 @@ namespace C_SHARP_LAB_1_FILTERS
                 pruittToolStripMenuItem_Click(sender, e);
             if (e.KeyChar == '4')
                 embossingToolStripMenuItem_Click(sender, e);
-            if (e.KeyChar == 'a')
+            if (e.KeyChar == 'a' || e.KeyChar == 'ф')
                 openToolStripMenuItem_Click(sender, e);
-            if (e.KeyChar == 's')
+            if (e.KeyChar == 's' || e.KeyChar == 'ы')
                 saveToolStripMenuItem_Click(sender, e);
         }
 
@@ -363,6 +363,26 @@ namespace C_SHARP_LAB_1_FILTERS
                 cashBack.Push(image);
             }
             Filters filter = new EmbossingFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void dilationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new DilationFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void erosionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new ErosionFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
     }

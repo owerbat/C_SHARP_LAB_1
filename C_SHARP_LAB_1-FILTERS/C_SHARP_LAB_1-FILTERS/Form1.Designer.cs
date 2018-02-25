@@ -65,6 +65,11 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.button1 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.mathMorphologyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dilationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.erosionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -85,7 +90,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.filtersToolStripMenuItem,
-            this.actionsToolStripMenuItem});
+            this.actionsToolStripMenuItem,
+            this.mathMorphologyToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1290, 28);
@@ -135,7 +141,7 @@
             this.glassToolStripMenuItem,
             this.wavesToolStripMenuItem});
             this.dottyToolStripMenuItem.Name = "dottyToolStripMenuItem";
-            this.dottyToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.dottyToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
             this.dottyToolStripMenuItem.Text = "Point";
             // 
             // inversionToolStripMenuItem
@@ -207,7 +213,7 @@
             this.scharrToolStripMenuItem,
             this.pruittToolStripMenuItem});
             this.matrixToolStripMenuItem.Name = "matrixToolStripMenuItem";
-            this.matrixToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.matrixToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
             this.matrixToolStripMenuItem.Text = "Matrix";
             // 
             // blurToolStripMenuItem
@@ -237,14 +243,14 @@
             // xToolStripMenuItem2
             // 
             this.xToolStripMenuItem2.Name = "xToolStripMenuItem2";
-            this.xToolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
+            this.xToolStripMenuItem2.Size = new System.Drawing.Size(93, 26);
             this.xToolStripMenuItem2.Text = "X";
             this.xToolStripMenuItem2.Click += new System.EventHandler(this.xToolStripMenuItem2_Click);
             // 
             // yToolStripMenuItem2
             // 
             this.yToolStripMenuItem2.Name = "yToolStripMenuItem2";
-            this.yToolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
+            this.yToolStripMenuItem2.Size = new System.Drawing.Size(93, 26);
             this.yToolStripMenuItem2.Text = "Y";
             this.yToolStripMenuItem2.Click += new System.EventHandler(this.yToolStripMenuItem2_Click);
             // 
@@ -275,14 +281,14 @@
             // xToolStripMenuItem
             // 
             this.xToolStripMenuItem.Name = "xToolStripMenuItem";
-            this.xToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.xToolStripMenuItem.Size = new System.Drawing.Size(93, 26);
             this.xToolStripMenuItem.Text = "X";
             this.xToolStripMenuItem.Click += new System.EventHandler(this.xToolStripMenuItem_Click);
             // 
             // yToolStripMenuItem
             // 
             this.yToolStripMenuItem.Name = "yToolStripMenuItem";
-            this.yToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.yToolStripMenuItem.Size = new System.Drawing.Size(93, 26);
             this.yToolStripMenuItem.Text = "Y";
             this.yToolStripMenuItem.Click += new System.EventHandler(this.yToolStripMenuItem_Click);
             // 
@@ -299,14 +305,14 @@
             // xToolStripMenuItem1
             // 
             this.xToolStripMenuItem1.Name = "xToolStripMenuItem1";
-            this.xToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
+            this.xToolStripMenuItem1.Size = new System.Drawing.Size(93, 26);
             this.xToolStripMenuItem1.Text = "X";
             this.xToolStripMenuItem1.Click += new System.EventHandler(this.xToolStripMenuItem1_Click);
             // 
             // yToolStripMenuItem1
             // 
             this.yToolStripMenuItem1.Name = "yToolStripMenuItem1";
-            this.yToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
+            this.yToolStripMenuItem1.Size = new System.Drawing.Size(93, 26);
             this.yToolStripMenuItem1.Text = "Y";
             this.yToolStripMenuItem1.Click += new System.EventHandler(this.yToolStripMenuItem1_Click);
             // 
@@ -315,7 +321,7 @@
             this.mixToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.embossingToolStripMenuItem});
             this.mixToolStripMenuItem.Name = "mixToolStripMenuItem";
-            this.mixToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.mixToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
             this.mixToolStripMenuItem.Text = "Mix";
             // 
             // embossingToolStripMenuItem
@@ -372,6 +378,43 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(1132, 23);
             this.progressBar1.TabIndex = 3;
+            // 
+            // mathMorphologyToolStripMenuItem
+            // 
+            this.mathMorphologyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dilationToolStripMenuItem,
+            this.erosionToolStripMenuItem,
+            this.closingToolStripMenuItem,
+            this.openingToolStripMenuItem});
+            this.mathMorphologyToolStripMenuItem.Name = "mathMorphologyToolStripMenuItem";
+            this.mathMorphologyToolStripMenuItem.Size = new System.Drawing.Size(141, 24);
+            this.mathMorphologyToolStripMenuItem.Text = "Math morphology";
+            // 
+            // dilationToolStripMenuItem
+            // 
+            this.dilationToolStripMenuItem.Name = "dilationToolStripMenuItem";
+            this.dilationToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.dilationToolStripMenuItem.Text = "Dilation";
+            this.dilationToolStripMenuItem.Click += new System.EventHandler(this.dilationToolStripMenuItem_Click);
+            // 
+            // erosionToolStripMenuItem
+            // 
+            this.erosionToolStripMenuItem.Name = "erosionToolStripMenuItem";
+            this.erosionToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.erosionToolStripMenuItem.Text = "Erosion";
+            this.erosionToolStripMenuItem.Click += new System.EventHandler(this.erosionToolStripMenuItem_Click);
+            // 
+            // closingToolStripMenuItem
+            // 
+            this.closingToolStripMenuItem.Name = "closingToolStripMenuItem";
+            this.closingToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.closingToolStripMenuItem.Text = "Closing";
+            // 
+            // openingToolStripMenuItem
+            // 
+            this.openingToolStripMenuItem.Name = "openingToolStripMenuItem";
+            this.openingToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.openingToolStripMenuItem.Text = "Opening";
             // 
             // Form1
             // 
@@ -433,6 +476,11 @@
         private System.Windows.Forms.ToolStripMenuItem verticalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mixToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem embossingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mathMorphologyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dilationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem erosionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openingToolStripMenuItem;
     }
 }
 
