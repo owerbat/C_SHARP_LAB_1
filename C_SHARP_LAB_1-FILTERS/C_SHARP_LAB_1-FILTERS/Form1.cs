@@ -450,6 +450,16 @@ namespace C_SHARP_LAB_1_FILTERS
             Filters filter = new GrayWorld();
             backgroundWorker1.RunWorkerAsync(filter);
         }
+
+        private void medianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new MedianFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
     }
     
 }

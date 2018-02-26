@@ -841,13 +841,90 @@ namespace C_SHARP_LAB_1_FILTERS
 
         public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
         {
-            Filters filterD = new DilationFilter();
+            /*Filters filterD = new DilationFilter();
             Filters filterE = new ErosionFilter();
 
             Bitmap tmp = filterD.processImage(sourceImage, worker);
             Bitmap res = filterE.processImage(tmp, worker);
 
-            return res;
+            return res;*/
+
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Bitmap tmp = new Bitmap(sourceImage.Width, sourceImage.Height);
+
+            for (int i = radiusX; i < sourceImage.Width - radiusX; i++)
+            {
+                worker.ReportProgress((int)((float)i / tmp.Width * 50));
+
+                if (worker.CancellationPending)
+                    return null;
+
+                for (int j = radiusY; j < sourceImage.Height - radiusY; j++)
+                {
+                    tmp.SetPixel(i, j, calculateNewPixelColorD(sourceImage, i, j));
+                }
+            }
+
+            Bitmap resultImage = new Bitmap(tmp.Width, tmp.Height);
+
+            for (int i = radiusX; i < tmp.Width - radiusX; i++)
+            {
+                worker.ReportProgress((int)((float)i / resultImage.Width * 50 + 50 * (tmp.Width -radiusX) / resultImage.Width));
+
+                if (worker.CancellationPending)
+                    return null;
+
+                for (int j = radiusY; j < tmp.Height - radiusY; j++)
+                {
+                    resultImage.SetPixel(i, j, calculateNewPixelColorE(tmp, i, j));
+                }
+            }
+
+            return resultImage;
+        }
+
+        protected Color calculateNewPixelColorD(Bitmap sourceImage, int x, int y)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Color max = Color.FromArgb(0, 0, 0);
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    Color curr = sourceImage.GetPixel(Clamp(x + i, 0, sourceImage.Width - 1), Clamp(y + j, 0, sourceImage.Height - 1));
+                    if ((kernel[j + radiusX, i + radiusY] != 0) && (Math.Sqrt(curr.R * curr.R + curr.G * curr.G + curr.B * curr.B) >
+                                                                    Math.Sqrt(max.R * max.R + max.G * max.G + max.B * max.B)))
+                        max = curr;
+                }
+            }
+
+            return max;
+        }
+
+        protected Color calculateNewPixelColorE(Bitmap sourceImage, int x, int y)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Color min = Color.FromArgb(255, 255, 255);
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    Color curr = sourceImage.GetPixel(Clamp(x + i, 0, sourceImage.Width - 1), Clamp(y + j, 0, sourceImage.Height - 1));
+                    if ((kernel[j + radiusX, i + radiusY] != 0) && (Math.Sqrt(curr.R * curr.R + curr.G * curr.G + curr.B * curr.B) <
+                                                                    Math.Sqrt(min.R * min.R + min.G * min.G + min.B * min.B)))
+                        min = curr;
+                }
+            }
+
+            return min;
         }
     };
 
@@ -860,12 +937,12 @@ namespace C_SHARP_LAB_1_FILTERS
         {
             
 
-            /*kernel = new float[3, 3]
+            kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
                 {0, 1, 0}
-            };*/
+            };
 
             /*kernel = new float[3, 3]
             {
@@ -874,14 +951,14 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1}
             };*/
 
-            kernel = new float[5, 5]
+            /*kernel = new float[5, 5]
             {
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1},
                 {0, 1, 1, 1, 0},
                 {0, 0, 1, 0, 0}
-            };
+            };*/
 
             /*kernel = new float[5, 5]
             {
@@ -895,7 +972,7 @@ namespace C_SHARP_LAB_1_FILTERS
 
         public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
         {
-            Filters filterD = new DilationFilter();
+            /*Filters filterD = new DilationFilter();
             Filters filterE = new ErosionFilter();
 
             Bitmap tmp = filterE.processImage(sourceImage, worker);
@@ -903,7 +980,84 @@ namespace C_SHARP_LAB_1_FILTERS
 
             //Bitmap res = filterE.processImage(sourceImage, worker);
 
-            return res;
+            return res;*/
+
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Bitmap tmp = new Bitmap(sourceImage.Width, sourceImage.Height);
+
+            for (int i = radiusX; i < sourceImage.Width - radiusX; i++)
+            {
+                worker.ReportProgress((int)((float)i / tmp.Width * 50));
+
+                if (worker.CancellationPending)
+                    return null;
+
+                for (int j = radiusY; j < sourceImage.Height - radiusY; j++)
+                {
+                    tmp.SetPixel(i, j, calculateNewPixelColorE(sourceImage, i, j));
+                }
+            }
+
+            Bitmap resultImage = new Bitmap(tmp.Width, tmp.Height);
+
+            for (int i = radiusX; i < tmp.Width - radiusX; i++)
+            {
+                worker.ReportProgress((int)((float)i / resultImage.Width * 50 + 50 * (tmp.Width - radiusX) / resultImage.Width));
+
+                if (worker.CancellationPending)
+                    return null;
+
+                for (int j = radiusY; j < tmp.Height - radiusY; j++)
+                {
+                    resultImage.SetPixel(i, j, calculateNewPixelColorD(tmp, i, j));
+                }
+            }
+
+            return resultImage;
+        }
+
+        protected Color calculateNewPixelColorD(Bitmap sourceImage, int x, int y)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Color max = Color.FromArgb(0, 0, 0);
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    Color curr = sourceImage.GetPixel(Clamp(x + i, 0, sourceImage.Width - 1), Clamp(y + j, 0, sourceImage.Height - 1));
+                    if ((kernel[j + radiusX, i + radiusY] != 0) && (Math.Sqrt(curr.R * curr.R + curr.G * curr.G + curr.B * curr.B) >
+                                                                    Math.Sqrt(max.R * max.R + max.G * max.G + max.B * max.B)))
+                        max = curr;
+                }
+            }
+
+            return max;
+        }
+
+        protected Color calculateNewPixelColorE(Bitmap sourceImage, int x, int y)
+        {
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+
+            Color min = Color.FromArgb(255, 255, 255);
+
+            for (int i = -radiusY; i <= radiusY; i++)
+            {
+                for (int j = -radiusX; j <= radiusX; j++)
+                {
+                    Color curr = sourceImage.GetPixel(Clamp(x + i, 0, sourceImage.Width - 1), Clamp(y + j, 0, sourceImage.Height - 1));
+                    if ((kernel[j + radiusX, i + radiusY] != 0) && (Math.Sqrt(curr.R * curr.R + curr.G * curr.G + curr.B * curr.B) <
+                                                                    Math.Sqrt(min.R * min.R + min.G * min.G + min.B * min.B)))
+                        min = curr;
+                }
+            }
+
+            return min;
         }
     };
 
@@ -956,6 +1110,52 @@ namespace C_SHARP_LAB_1_FILTERS
                 for (int j = 0; j < sourceImage.Height; j++)
                 {
                     resultImage.SetPixel(i, j, calculateNewPixelColor1(sourceImage, i, j, coefR, coefG, coefB));
+                }
+            }
+            return resultImage;
+        }
+    };
+
+    class MedianFilter : Filters
+    {
+        int radius = 1;
+
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
+        {
+            int[] masR = new int[(2 * radius + 1) * (2 * radius + 1)];
+            int[] masG = new int[(2 * radius + 1) * (2 * radius + 1)];
+            int[] masB = new int[(2 * radius + 1) * (2 * radius + 1)];
+
+            int k = 0;
+            for(int i = -radius; i <= radius; i++)
+                for(int j = -radius; j <= radius; j++)
+                {
+                    masR[k] = sourceImage.GetPixel(x + i, y + j).R;
+                    masG[k] = sourceImage.GetPixel(x + i, y + j).G;
+                    masB[k] = sourceImage.GetPixel(x + i, y + j).B;
+                    k++;
+                }
+
+            Array.Sort(masR);
+            Array.Sort(masG);
+            Array.Sort(masB);
+
+            return Color.FromArgb(masR[(2 * radius + 1) * (2 * radius + 1) / 2],
+                                  masG[(2 * radius + 1) * (2 * radius + 1) / 2],
+                                  masB[(2 * radius + 1) * (2 * radius + 1) / 2]);
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+            for (int i = radius; i < sourceImage.Width - radius; i++)
+            {
+                worker.ReportProgress((int)((float)i / resultImage.Width * 100));
+                if (worker.CancellationPending)
+                    return null;
+                for (int j = radius; j < sourceImage.Height - radius; j++)
+                {
+                    resultImage.SetPixel(i, j, calculateNewPixelColor(sourceImage, i, j));
                 }
             }
             return resultImage;
