@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 
 namespace C_SHARP_LAB_1_FILTERS
@@ -638,12 +639,13 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         public DilationFilter()
         {
-            /*kernel = new float[3, 3]
+            
+            kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
                 {0, 1, 0}
-            };*/
+            };
                 
             /*kernel = new float[3, 3]
             {
@@ -652,14 +654,14 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1}
             };*/
 
-            kernel = new float[5, 5]
+            /*kernel = new float[5, 5]
             {
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1},
                 {0, 1, 1, 1, 0},
                 {0, 0, 1, 0, 0}
-            };
+            };*/
 
             /*kernel = new float[5, 5]
             {
@@ -669,6 +671,62 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1}
             };*/
+        }
+
+        public DilationFilter(DomainUpDown domain)
+        {
+            string tmp = domain.Text;
+
+            switch (tmp)
+            {
+                case "3x3 - square":
+
+                    kernel = new float[3, 3]
+                    {
+                        {0, 1, 0},
+                        {1, 1, 1},
+                        {0, 1, 0}
+                    };
+                    break;
+
+                case "3x3 - circle":
+
+                    kernel = new float[3, 3]
+                    {
+                        {1, 1, 1},
+                        {1, 1, 1},
+                        {1, 1, 1}
+                    };
+                    break;
+
+                case "5x5 - square":
+
+                    kernel = new float[5, 5]
+                    {
+                        {0, 0, 1, 0, 0},
+                        {0, 1, 1, 1, 0},
+                        {1, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 0},
+                        {0, 0, 1, 0, 0}
+                    };
+                    break;
+
+                case "5x5 - circle":
+
+                    kernel = new float[5, 5]
+                    {
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1}
+                    };
+                    break;
+
+                default: 
+                    DialogResult res = MessageBox.Show("Kernel is incorrect\n" + domain.Items.ToString());
+                    break;
+            }
         }
 
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
@@ -722,12 +780,12 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         public ErosionFilter()
         {
-            /*kernel = new float[3, 3]
+            kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
                 {0, 1, 0}
-            };*/
+            };
 
             /*kernel = new float[3, 3]
             {
@@ -736,14 +794,14 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1}
             };*/
 
-            kernel = new float[5, 5]
+            /*kernel = new float[5, 5]
             {
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1},
                 {0, 1, 1, 1, 0},
                 {0, 0, 1, 0, 0}
-            };
+            };*/
 
             /*kernel = new float[5, 5]
             {
@@ -753,6 +811,67 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1}
             };*/
+        }
+
+        public ErosionFilter(DomainUpDown domain)
+        {
+            string tmp = domain.Text;
+
+            switch (tmp)
+            {
+                case "3x3 - square":
+
+                    kernel = new float[3, 3]
+                    {
+                        {0, 1, 0},
+                        {1, 1, 1},
+                        {0, 1, 0}
+                    };
+                    break;
+
+                case "3x3 - circle":
+
+                    kernel = new float[3, 3]
+                    {
+                        {1, 1, 1},
+                        {1, 1, 1},
+                        {1, 1, 1}
+                    };
+                    break;
+
+                case "5x5 - square":
+
+                    kernel = new float[5, 5]
+                    {
+                        {0, 0, 1, 0, 0},
+                        {0, 1, 1, 1, 0},
+                        {1, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 0},
+                        {0, 0, 1, 0, 0}
+                    };
+                    break;
+
+                case "5x5 - circle":
+
+                    kernel = new float[5, 5]
+                    {
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1}
+                    };
+                    break;
+
+                default:
+                    DialogResult res = MessageBox.Show("Kernel is incorrect\n" + domain.Items.ToString());
+                    break;
+            }
+        }
+
+        public ErosionFilter(float[,] _kernel)
+        {
+            kernel = _kernel;
         }
 
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
@@ -806,12 +925,12 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         public ClosingFilter()
         {
-            /*kernel = new float[3, 3]
+            kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
                 {0, 1, 0}
-            };*/
+            };
 
             /*kernel = new float[3, 3]
             {
@@ -820,14 +939,14 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1}
             };*/
 
-            kernel = new float[5, 5]
+            /*kernel = new float[5, 5]
             {
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1},
                 {0, 1, 1, 1, 0},
                 {0, 0, 1, 0, 0}
-            };
+            };*/
 
             /*kernel = new float[5, 5]
             {
@@ -837,6 +956,62 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1}
             };*/
+        }
+
+        public ClosingFilter(DomainUpDown domain)
+        {
+            string tmp = domain.Text;
+
+            switch (tmp)
+            {
+                case "3x3 - square":
+
+                    kernel = new float[3, 3]
+                    {
+                        {0, 1, 0},
+                        {1, 1, 1},
+                        {0, 1, 0}
+                    };
+                    break;
+
+                case "3x3 - circle":
+
+                    kernel = new float[3, 3]
+                    {
+                        {1, 1, 1},
+                        {1, 1, 1},
+                        {1, 1, 1}
+                    };
+                    break;
+
+                case "5x5 - square":
+
+                    kernel = new float[5, 5]
+                    {
+                        {0, 0, 1, 0, 0},
+                        {0, 1, 1, 1, 0},
+                        {1, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 0},
+                        {0, 0, 1, 0, 0}
+                    };
+                    break;
+
+                case "5x5 - circle":
+
+                    kernel = new float[5, 5]
+                    {
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1}
+                    };
+                    break;
+
+                default:
+                    DialogResult res = MessageBox.Show("Kernel is incorrect\n" + domain.Items.ToString());
+                    break;
+            }
         }
 
         public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
@@ -935,9 +1110,7 @@ namespace C_SHARP_LAB_1_FILTERS
     {
         public OpeningFilter()
         {
-            
-
-            kernel = new float[3, 3]
+           kernel = new float[3, 3]
             {
                 {0, 1, 0},
                 {1, 1, 1},
@@ -968,6 +1141,62 @@ namespace C_SHARP_LAB_1_FILTERS
                 {1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1}
             };*/
+        }
+
+        public OpeningFilter(DomainUpDown domain)
+        {
+            string tmp = domain.Text;
+
+            switch (tmp)
+            {
+                case "3x3 - square":
+
+                    kernel = new float[3, 3]
+                    {
+                        {0, 1, 0},
+                        {1, 1, 1},
+                        {0, 1, 0}
+                    };
+                    break;
+
+                case "3x3 - circle":
+
+                    kernel = new float[3, 3]
+                    {
+                        {1, 1, 1},
+                        {1, 1, 1},
+                        {1, 1, 1}
+                    };
+                    break;
+
+                case "5x5 - square":
+
+                    kernel = new float[5, 5]
+                    {
+                        {0, 0, 1, 0, 0},
+                        {0, 1, 1, 1, 0},
+                        {1, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 0},
+                        {0, 0, 1, 0, 0}
+                    };
+                    break;
+
+                case "5x5 - circle":
+
+                    kernel = new float[5, 5]
+                    {
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1}
+                    };
+                    break;
+
+                default:
+                    DialogResult res = MessageBox.Show("Kernel is incorrect\n" + domain.Items.ToString());
+                    break;
+            }
         }
 
         public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
@@ -1158,6 +1387,128 @@ namespace C_SHARP_LAB_1_FILTERS
                     resultImage.SetPixel(i, j, calculateNewPixelColor(sourceImage, i, j));
                 }
             }
+            return resultImage;
+        }
+    };
+
+
+
+
+    class GradFilter: MatrixFilter
+    {
+        public GradFilter()
+        {
+            kernel = new float[3, 3]
+            {
+                {0, 1, 0},
+                {1, 1, 1},
+                {0, 1, 0}
+            };
+
+            /*kernel = new float[3, 3]
+            {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
+            };*/
+
+            /*kernel = new float[5, 5]
+            {
+                {0, 0, 1, 0, 0},
+                {0, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1},
+                {0, 1, 1, 1, 0},
+                {0, 0, 1, 0, 0}
+            };*/
+
+            /*kernel = new float[5, 5]
+            {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+            };*/
+        }
+
+        public GradFilter(DomainUpDown domain)
+        {
+            string tmp = domain.Text;
+
+            switch (tmp)
+            {
+                case "3x3 - square":
+
+                    kernel = new float[3, 3]
+                    {
+                        {0, 1, 0},
+                        {1, 1, 1},
+                        {0, 1, 0}
+                    };
+                    break;
+
+                case "3x3 - circle":
+
+                    kernel = new float[3, 3]
+                    {
+                        {1, 1, 1},
+                        {1, 1, 1},
+                        {1, 1, 1}
+                    };
+                    break;
+
+                case "5x5 - square":
+
+                    kernel = new float[5, 5]
+                    {
+                        {0, 0, 1, 0, 0},
+                        {0, 1, 1, 1, 0},
+                        {1, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 0},
+                        {0, 0, 1, 0, 0}
+                    };
+                    break;
+
+                case "5x5 - circle":
+
+                    kernel = new float[5, 5]
+                    {
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 1}
+                    };
+                    break;
+
+                default:
+                    DialogResult res = MessageBox.Show("Kernel is incorrect\n" + domain.Items.ToString());
+                    break;
+            }
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            Filters filterD = new DilationFilter();
+            Filters filterE1 = new ErosionFilter();
+
+            Bitmap tmpD = new Bitmap(sourceImage.Width, sourceImage.Height);
+            Bitmap tmpE = new Bitmap(sourceImage.Width, sourceImage.Height);
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+
+            tmpD = filterD.processImage(sourceImage, worker);
+            tmpE = filterE1.processImage(sourceImage, worker);
+
+            float[,] newKernel = new float[tmpE.Width, tmpE.Height];
+            for(int i=0;i<tmpE.Width;i++)
+                for(int j = 0; j < tmpE.Height; j++)
+                {
+                    newKernel[i, j] = (float)((tmpE.GetPixel(i, j).R + tmpE.GetPixel(i, j).G + tmpE.GetPixel(i, j).B) / 3);
+                }
+
+            Filters filterE2 = new ErosionFilter(newKernel);
+            resultImage = filterE2.processImage(tmpD, worker);
+
             return resultImage;
         }
     };

@@ -375,8 +375,9 @@ namespace C_SHARP_LAB_1_FILTERS
             {
                 cashBack.Push(image);
             }
-            Filters filter = new DilationFilter();
+            Filters filter = new DilationFilter(domainUpDown1);
             backgroundWorker1.RunWorkerAsync(filter);
+            //string a = domainUpDown1.Items.ToString();
         }
 
         private void erosionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -385,59 +386,27 @@ namespace C_SHARP_LAB_1_FILTERS
             {
                 cashBack.Push(image);
             }
-            Filters filter = new ErosionFilter();
+            Filters filter = new ErosionFilter(domainUpDown1);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void closingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*try
-            {
-                if (pictureBox1.Image != null)
-                {
-                    cashBack.Push(image);
-                }
-                Filters filter = new DilationFilter();
-                backgroundWorker1.RunWorkerAsync(filter);
-                filter = new ErosionFilter();
-                backgroundWorker1.RunWorkerAsync(filter);
-            }
-            catch(Exception)
-            {
-
-            }*/
-
             if (pictureBox1.Image != null)
             {
                 cashBack.Push(image);
             }
-            Filters filter = new ClosingFilter();
+            Filters filter = new ClosingFilter(domainUpDown1);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void openingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*try
-            {
-                if (pictureBox1.Image != null)
-                {
-                    cashBack.Push(image);
-                }
-                Filters filter = new ErosionFilter();
-                backgroundWorker1.RunWorkerAsync(filter);
-                filter = new DilationFilter();
-                backgroundWorker1.RunWorkerAsync(filter);
-            }
-            catch (Exception)
-            {
-
-            }*/
-
             if (pictureBox1.Image != null)
             {
                 cashBack.Push(image);
             }
-            Filters filter = new OpeningFilter();
+            Filters filter = new OpeningFilter(domainUpDown1);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
@@ -458,6 +427,16 @@ namespace C_SHARP_LAB_1_FILTERS
                 cashBack.Push(image);
             }
             Filters filter = new MedianFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void gradToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new GradFilter(domainUpDown1);
             backgroundWorker1.RunWorkerAsync(filter);
         }
     }
