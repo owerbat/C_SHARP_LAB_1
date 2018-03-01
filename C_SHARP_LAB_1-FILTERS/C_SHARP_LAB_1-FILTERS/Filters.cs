@@ -1396,6 +1396,8 @@ namespace C_SHARP_LAB_1_FILTERS
 
     class GradFilter: MatrixFilter
     {
+        public DomainUpDown Domain;
+
         public GradFilter()
         {
             kernel = new float[3, 3]
@@ -1433,6 +1435,8 @@ namespace C_SHARP_LAB_1_FILTERS
 
         public GradFilter(DomainUpDown domain)
         {
+            Domain = domain;
+
             string tmp = domain.Text;
 
             switch (tmp)
@@ -1489,27 +1493,34 @@ namespace C_SHARP_LAB_1_FILTERS
 
         public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
         {
-            Filters filterD = new DilationFilter();
-            Filters filterE1 = new ErosionFilter();
+            if (Domain != null)
+            {
+                Filters filterD = new DilationFilter(Domain);
+                Filters filterE = new ErosionFilter(Domain);
 
-            Bitmap tmpD = new Bitmap(sourceImage.Width, sourceImage.Height);
-            Bitmap tmpE = new Bitmap(sourceImage.Width, sourceImage.Height);
-            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+                Bitmap tmpD = new Bitmap(sourceImage.Width, sourceImage.Height);
+                Bitmap tmpE = new Bitmap(sourceImage.Width, sourceImage.Height);
+                Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
 
-            tmpD = filterD.processImage(sourceImage, worker);
-            tmpE = filterE1.processImage(sourceImage, worker);
+                BackgroundWorker tmpWorker = new BackgroundWorker();
 
-            float[,] newKernel = new float[tmpE.Width, tmpE.Height];
-            for(int i=0;i<tmpE.Width;i++)
-                for(int j = 0; j < tmpE.Height; j++)
+                tmpD = filterD.processImage(sourceImage, worker);
+                tmpE = filterE.processImage(sourceImage, worker);
+
+                for (int i = 0; i < resultImage.Width; i++)
                 {
-                    newKernel[i, j] = (float)((tmpE.GetPixel(i, j).R + tmpE.GetPixel(i, j).G + tmpE.GetPixel(i, j).B) / 3);
+                    worker.ReportProgress((int)((float)i / resultImage.Width * 100));
+                    if (worker.CancellationPending)
+                        return null;
+                    for (int j = 0; j < resultImage.Height; j++)
+                        resultImage.SetPixel(i, j, Color.FromArgb(Clamp(tmpD.GetPixel(i, j).R - tmpE.GetPixel(i, j).R, 0, 255),
+                                                                  Clamp(tmpD.GetPixel(i, j).G - tmpE.GetPixel(i, j).G, 0, 255),
+                                                                  Clamp(tmpD.GetPixel(i, j).B - tmpE.GetPixel(i, j).B, 0, 255)));
                 }
 
-            Filters filterE2 = new ErosionFilter(newKernel);
-            resultImage = filterE2.processImage(tmpD, worker);
-
-            return resultImage;
+                return resultImage;
+            }
+            return null;
         }
     };
 }
