@@ -439,6 +439,16 @@ namespace C_SHARP_LAB_1_FILTERS
             Filters filter = new GradFilter(domainUpDown1);
             backgroundWorker1.RunWorkerAsync(filter);
         }
+
+        private void autoLevelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                cashBack.Push(image);
+            }
+            Filters filter = new AutoLevels();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
     }
     
 }

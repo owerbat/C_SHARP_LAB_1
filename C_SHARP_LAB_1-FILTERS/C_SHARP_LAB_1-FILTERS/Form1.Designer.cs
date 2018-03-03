@@ -75,6 +75,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
+            this.autoLevelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -147,9 +148,10 @@
             this.sepiaToolStripMenuItem,
             this.moreBrightnessToolStripMenuItem,
             this.glassToolStripMenuItem,
-            this.wavesToolStripMenuItem});
+            this.wavesToolStripMenuItem,
+            this.autoLevelsToolStripMenuItem});
             this.dottyToolStripMenuItem.Name = "dottyToolStripMenuItem";
-            this.dottyToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.dottyToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.dottyToolStripMenuItem.Text = "Point";
             // 
             // inversionToolStripMenuItem
@@ -221,7 +223,7 @@
             this.scharrToolStripMenuItem,
             this.pruittToolStripMenuItem});
             this.matrixToolStripMenuItem.Name = "matrixToolStripMenuItem";
-            this.matrixToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.matrixToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.matrixToolStripMenuItem.Text = "Matrix";
             // 
             // blurToolStripMenuItem
@@ -331,7 +333,7 @@
             this.grayWorldToolStripMenuItem,
             this.medianToolStripMenuItem});
             this.mixToolStripMenuItem.Name = "mixToolStripMenuItem";
-            this.mixToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.mixToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.mixToolStripMenuItem.Text = "Mix";
             // 
             // embossingToolStripMenuItem
@@ -477,6 +479,13 @@
             this.domainUpDown1.TabIndex = 5;
             this.domainUpDown1.Text = "3x3 - circle";
             // 
+            // autoLevelsToolStripMenuItem
+            // 
+            this.autoLevelsToolStripMenuItem.Name = "autoLevelsToolStripMenuItem";
+            this.autoLevelsToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
+            this.autoLevelsToolStripMenuItem.Text = "Auto levels";
+            this.autoLevelsToolStripMenuItem.Click += new System.EventHandler(this.autoLevelsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -549,6 +558,7 @@
         private System.Windows.Forms.ToolStripMenuItem gradToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DomainUpDown domainUpDown1;
+        private System.Windows.Forms.ToolStripMenuItem autoLevelsToolStripMenuItem;
     }
 }
 

@@ -1523,4 +1523,63 @@ namespace C_SHARP_LAB_1_FILTERS
             return null;
         }
     };
+
+
+
+
+    class AutoLevels : MatrixFilter
+    {
+        protected int maxR, minR, maxG, minG, maxB, minB;
+
+        public AutoLevels()
+        {
+            maxR = new int();
+            minR = new int();
+            maxG = new int();
+            minG = new int();
+            maxB = new int();
+            minB = new int();
+        }
+
+        public override Bitmap processImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            maxR = minR = sourceImage.GetPixel(0, 0).R;
+            maxG = minG = sourceImage.GetPixel(0, 0).G;
+            maxB = minB = sourceImage.GetPixel(0, 0).B;
+
+            for(int i = 0; i < sourceImage.Width; i++)
+                for(int j = 0; j < sourceImage.Height; j++)
+                {
+                    if (sourceImage.GetPixel(i, j).R > maxR)
+                        maxR = sourceImage.GetPixel(i, j).R;
+                    if (sourceImage.GetPixel(i, j).G > maxG)
+                        maxG = sourceImage.GetPixel(i, j).G;
+                    if (sourceImage.GetPixel(i, j).B > maxB)
+                        maxB = sourceImage.GetPixel(i, j).B;
+                    if (sourceImage.GetPixel(i, j).R < minR)
+                        minR = sourceImage.GetPixel(i, j).R;
+                    if (sourceImage.GetPixel(i, j).G < minG)
+                        minG = sourceImage.GetPixel(i, j).G;
+                    if (sourceImage.GetPixel(i, j).B < minB)
+                        minB = sourceImage.GetPixel(i, j).B;
+                }
+
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+
+            for (int i = 0; i < sourceImage.Width; i++)
+            {
+                worker.ReportProgress((int)((float)i / resultImage.Width * 100));
+                if (worker.CancellationPending)
+                    return null;
+                for (int j = 0; j < sourceImage.Height; j++)
+                {
+                    resultImage.SetPixel(i, j,
+                        Color.FromArgb(Clamp((int)(255 * (sourceImage.GetPixel(i, j).R - minR) / (maxR - minR)), 0, 255),
+                                       Clamp((int)(255 * (sourceImage.GetPixel(i, j).G - minG) / (maxG - minG)), 0, 255),
+                                       Clamp((int)(255 * (sourceImage.GetPixel(i, j).B - minB) / (maxB - minB)), 0, 255)));
+                }
+            }
+            return resultImage;
+        }
+    };
 }
